@@ -1,23 +1,18 @@
-import { cookies } from "next/headers";
-
-export const getOrders = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-
+export const getOrders = async (token?: string) => {
   if (!token) {
-    throw new Error("Not authenticated");
+    return [];
   }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/orders`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch orders");
+    return res.json();
+  } catch {
+    return [];
   }
-
-  return res.json();
 };
