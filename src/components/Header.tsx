@@ -5,8 +5,11 @@ import { RiShoppingBag4Fill } from "react-icons/ri";
 const Header = () => {
   return (
     <header className="flex h-16 items-center justify-between px-6 border-b-1 mx-auto">
-      <RiShoppingBag4Fill className="size-8" />
-      <h1 className="text-3xl tracking-[10px] hidden sm:block">THE SHOP</h1>
+      <div className="flex gap-4">
+        <RiShoppingBag4Fill className="size-8" />
+        <h1 className="text-3xl tracking-[10px] hidden sm:block">THE SHOP</h1>
+      </div>
+
       <nav className="flex gap-4 items-center">
         <Link href="/products">Products</Link>
         <Link href="/cart">
